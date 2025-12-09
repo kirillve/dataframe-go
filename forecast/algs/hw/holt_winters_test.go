@@ -4,6 +4,7 @@ package hw
 
 import (
 	"context"
+	"math"
 	"testing"
 
 	dataframe "github.com/rocketlaunchr/dataframe-go"
@@ -53,19 +54,22 @@ func TestHW(t *testing.T) {
 		t.Errorf("error encountered: %s\n", err)
 	}
 
-	expected := dataframe.NewSeriesFloat64("expected", nil,
+	expected := []float64{
 		26.27699081580312, 12.48133856351768, 22.077813893501844, 26.839391481818982, 31.600180075780813, 30.48212275836478,
 		41.83687016138987, 44.46400992890207, 32.183690818478226, 27.244288540553175, 28.104940474424172, 33.28718444078283,
 		25.754987449064725, 11.95933519677928, 21.555810526763448, 26.317388115080583, 31.078176709042417, 29.960119391626378,
 		41.31486679465147, 43.94200656216367, 31.66168745173983, 26.722285173814775, 27.582937107685776, 32.76518107404443,
-	)
-
-	eq, err := hwPredict.IsEqual(ctx, expected)
-	if err != nil {
-		t.Errorf("error encountered: %s\n", err)
 	}
-	if !eq {
-		t.Errorf("prection: \n%s\n is not equal to expected: \n%s\n", hwPredict.Table(), expected.Table())
+
+	// Compare with tolerance for floating-point precision differences across Go versions
+	if hwPredict.NRows() != len(expected) {
+		t.Errorf("prediction has %d rows, expected %d", hwPredict.NRows(), len(expected))
+	}
+	for i, exp := range expected {
+		got := hwPredict.Values[i]
+		if math.Abs(got-exp) > 1e-10 {
+			t.Errorf("row %d: got %v, expected %v", i, got, exp)
+		}
 	}
 
 	errVal, err := hwModel.Evaluate(ctx, hwPredict, evalFn.RootMeanSquaredError)
@@ -74,7 +78,7 @@ func TestHW(t *testing.T) {
 	}
 	expRMSE := 12.666953719779478
 
-	if errVal != expRMSE {
+	if math.Abs(errVal-expRMSE) > 1e-6 {
 		t.Errorf("expected error calc Value: %f is not same as actual errVal: %f", expRMSE, errVal)
 	}
 }

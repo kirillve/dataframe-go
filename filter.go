@@ -83,8 +83,6 @@ func Filter(ctx context.Context, sdf interface{}, fn interface{}, opts ...Filter
 	default:
 		panic("df must be a Series or DataFrame")
 	}
-
-	return nil, nil
 }
 
 func filterSeries(ctx context.Context, s Series, fn FilterSeriesFn, opts ...FilterOptions) (Series, error) {

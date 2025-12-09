@@ -12,13 +12,15 @@
 <img src="https://github.com/rocketlaunchr/dataframe-go/raw/master/assets/logo.png" alt="dataframe-go" />
 </p>
 
-Dataframes are used for statistics, machine-learning, and data manipulation/exploration. You can think of a Dataframe as an excel spreadsheet.
+Dataframes are used for statistics, machine-learning, and data manipulation/exploration. You can think of a Dataframe as
+an excel spreadsheet.
 This package is designed to be light-weight and intuitive.
 
-⚠️ The package is production ready but the API is not stable yet. Once Go 1.18 (Generics) is introduced, the  **ENTIRE** package will be rewritten. For example, there will only be 1 generic Series type. After that, version `1.0.0` will be tagged.
+⚠️ The package is production ready but the API is not stable yet. Once Go 1.18 (Generics) is introduced, the  **ENTIRE**
+package will be rewritten. For example, there will only be 1 generic Series type. After that, version `1.0.0` will be
+tagged.
 
 It is recommended your package manager locks to a commit id instead of the master branch directly. ⚠️
-
 
 # Features
 
@@ -58,7 +60,7 @@ s2 := dataframe.NewSeriesFloat64("sales", nil, 50.3, 23.4, 56.2, nil, nil, 84.2,
 df := dataframe.NewDataFrame(s1, s2)
 
 fmt.Print(df.Table())
-  
+
 OUTPUT:
 +-----+-------+---------+
 |     |  DAY  |  SALES  |
@@ -76,6 +78,7 @@ OUTPUT:
 +-----+-------+---------+
 
 ```
+
 [![Go Playground](https://img.shields.io/badge/Go-Playground-5593c7.svg?labelColor=41c3f3&style=for-the-badge)](https://play.golang.org/p/eC5HYAEHjNI)
 
 ## Insert and Remove Row
@@ -85,8 +88,8 @@ OUTPUT:
 df.Append(nil, 9, 123.6)
 
 df.Append(nil, map[string]interface{}{
-	"day":   10,
-	"sales": nil,
+"day":   10,
+"sales": nil,
 })
 
 df.Remove(0)
@@ -108,6 +111,7 @@ OUTPUT:
 | 9X2 | INT64 | FLOAT64 |
 +-----+-------+---------+
 ```
+
 [![Go Playground](https://img.shields.io/badge/Go-Playground-5593c7.svg?labelColor=41c3f3&style=for-the-badge)](https://play.golang.org/p/xwW_410vQ2p)
 
 ## Update Row
@@ -115,8 +119,8 @@ OUTPUT:
 ```go
 
 df.UpdateRow(0, nil, map[string]interface{}{
-	"day":   3,
-	"sales": 45,
+"day":   3,
+"sales": 45,
 })
 
 ```
@@ -126,8 +130,8 @@ df.UpdateRow(0, nil, map[string]interface{}{
 ```go
 
 sks := []dataframe.SortKey{
-	{Key: "sales", Desc: true},
-	{Key: "day", Desc: true},
+{Key: "sales", Desc: true},
+{Key: "day", Desc: true},
 }
 
 df.Sort(ctx, sks)
@@ -149,6 +153,7 @@ OUTPUT:
 | 9X2 | INT64 | FLOAT64 |
 +-----+-------+---------+
 ```
+
 [![Go Playground](https://img.shields.io/badge/Go-Playground-5593c7.svg?labelColor=41c3f3&style=for-the-badge)](https://play.golang.org/p/lsJkKw3ZUJq)
 
 ## Iterating
@@ -163,11 +168,11 @@ iterator := df.ValuesIterator(dataframe.ValuesOptions{0, 1, true}) // Don't appl
 
 df.Lock()
 for {
-	row, vals, _ := iterator()
-	if row == nil {
-		break
-	}
-	fmt.Println(*row, vals)
+row, vals, _ := iterator()
+if row == nil {
+break
+}
+fmt.Println(*row, vals)
 }
 df.Unlock()
 
@@ -181,13 +186,16 @@ OUTPUT:
 6 map[day:7 0:7 sales:72 1:72]
 7 map[day:8 0:8 sales:89 1:89]
 ```
+
 [![Go Playground](https://img.shields.io/badge/Go-Playground-5593c7.svg?labelColor=41c3f3&style=for-the-badge)](https://play.golang.org/p/eqjvu-vO8sr)
 
 ## Statistics
 
-You can easily calculate statistics for a Series using the [gonum](https://godoc.org/gonum.org/v1/gonum/stat) or [montanaflynn/stats](https://godoc.org/github.com/montanaflynn/stats) package.
+You can easily calculate statistics for a Series using the [gonum](https://godoc.org/gonum.org/v1/gonum/stat)
+or [montanaflynn/stats](https://godoc.org/github.com/montanaflynn/stats) package.
 
-`SeriesFloat64` and `SeriesTime` provide access to the exported `Values` field to seamlessly interoperate with external math-based packages.
+`SeriesFloat64` and `SeriesTime` provide access to the exported `Values` field to seamlessly interoperate with external
+math-based packages.
 
 ### Example
 
@@ -223,9 +231,9 @@ std := stat.StdDev(sf.Values, nil)
 
 ```go
 import (
-	chart "github.com/wcharczuk/go-chart"
-	"github.com/rocketlaunchr/dataframe-go/plot"
-	wc "github.com/rocketlaunchr/dataframe-go/plot/wcharczuk/go-chart"
+chart "github.com/wcharczuk/go-chart"
+"github.com/rocketlaunchr/dataframe-go/plot"
+wc "github.com/rocketlaunchr/dataframe-go/plot/wcharczuk/go-chart"
 )
 
 sales := dataframe.NewSeriesFloat64("sales", nil, 50.3, nil, 23.4, 56.2, 89, 32, 84.2, 72, 89)
@@ -259,6 +267,7 @@ df := dataframe.NewDataFrame(sx, sy)
 fn := funcs.RegFunc("sin(2*𝜋*x/24)")
 funcs.Evaluate(ctx, df, fn, 1)
 ```
+
 [![Go Playground](https://img.shields.io/badge/Go-Playground-5593c7.svg?labelColor=41c3f3&style=for-the-badge)](https://play.golang.org/p/f4GfS2rUjaM)
 
 Output:
@@ -269,7 +278,9 @@ Output:
 
 ## Importing Data
 
-The `imports` sub-package has support for importing csv, jsonl, parquet, and directly from a SQL database. The `DictateDataType` option can be set to specify the true underlying data type. Alternatively, `InferDataTypes` option can be set.
+The `imports` sub-package has support for importing csv, jsonl, parquet, and directly from a SQL database. The
+`DictateDataType` option can be set to specify the true underlying data type. Alternatively, `InferDataTypes` option can
+be set.
 
 ### CSV
 
@@ -303,22 +314,26 @@ OUTPUT:
 | 8X5 |     STRING     |    TIME    | INT64 | FLOAT64 | INT64 |
 +-----+----------------+------------+-------+---------+-------+
 ```
+
 [![Go Playground](https://img.shields.io/badge/Go-Playground-5593c7.svg?labelColor=41c3f3&style=for-the-badge)](https://play.golang.org/p/7hyUXnRy1pR)
 
 ## Exporting Data
 
 The `exports` sub-package has support for exporting to csv, jsonl, parquet, Excel and directly to a SQL database.
 
-
 ## Optimizations
 
-* If you know the number of rows in advance, you can set the capacity of the underlying slice of a series using `SeriesInit{}`. This will preallocate memory and provide speed improvements. 
+* If you know the number of rows in advance, you can set the capacity of the underlying slice of a series using
+  `SeriesInit{}`. This will preallocate memory and provide speed improvements.
 
 # Generic Series
 
-Out of the box, there is support for `string`, `time.Time`, `float64` and `int64`. Automatic support exists for `float32` and all types of integers. There is a convenience function provided for dealing with `bool`. There is also support for `complex128` inside the `xseries` subpackage.
+Out of the box, there is support for `string`, `time.Time`, `float64` and `int64`. Automatic support exists for
+`float32` and all types of integers. There is a convenience function provided for dealing with `bool`. There is also
+support for `complex128` inside the `xseries` subpackage.
 
-There may be times that you want to use your own custom data types. You can either implement your own `Series` type (more performant) or use the **Generic Series** (more convenient).
+There may be times that you want to use your own custom data types. You can either implement your own `Series` type (
+more performant) or use the **Generic Series** (more convenient).
 
 ## civil.Date
 
@@ -382,8 +397,8 @@ Let's give a promotion to everyone by doubling their salary.
 ```go
 s := df.Series[2]
 
-applyFn := dataframe.ApplySeriesFn(func(val interface{}, row, nRows int) interface{} {
-	return 2 * val.(int64)
+applyFn := dataframe.ApplySeriesFn(func (val interface{}, row, nRows int) interface{} {
+return 2 * val.(int64)
 })
 
 dataframe.Apply(ctx, s, applyFn, dataframe.FilterOptions{InPlace: true})
@@ -405,7 +420,6 @@ dataframe.Apply(ctx, s, applyFn, dataframe.FilterOptions{InPlace: true})
 | 8X3 |     STRING     |     STRING     |   INT64   |
 +-----+----------------+----------------+-----------+
 ```
-
 
 ## Create a Time series
 
@@ -448,11 +462,11 @@ df.AddSeries(mts, nil)
 Let's filter out our senior employees (they have titles) for no reason.
 
 ```go
-filterFn := dataframe.FilterDataFrameFn(func(vals map[interface{}]interface{}, row, nRows int) (dataframe.FilterAction, error) {
-	if vals["title"] == nil {
-		return dataframe.DROP, nil
-	}
-	return dataframe.KEEP, nil
+filterFn := dataframe.FilterDataFrameFn(func (vals map[interface{}]interface{}, row, nRows int) (dataframe.FilterAction, error) {
+if vals["title"] == nil {
+return dataframe.DROP, nil
+}
+return dataframe.KEEP, nil
 })
 
 seniors, _ := dataframe.Filter(ctx, df, filterFn)
@@ -475,14 +489,14 @@ seniors, _ := dataframe.Filter(ctx, df, filterFn)
 +-----+----------------+----------------+-----------+--------------------------------+
 ```
 
-
 ## Other useful packages
 
 - [awesome-svelte](https://github.com/rocketlaunchr/awesome-svelte) - Resources for killing react
 - [dbq](https://github.com/rocketlaunchr/dbq) - Zero boilerplate database operations for Go
 - [electron-alert](https://github.com/rocketlaunchr/electron-alert) - SweetAlert2 for Electron Applications
 - [google-search](https://github.com/rocketlaunchr/google-search) - Scrape google search results
-- [igo](https://github.com/rocketlaunchr/igo) - A Go transpiler with cool new syntax such as fordefer (defer for for-loops)
+- [igo](https://github.com/rocketlaunchr/igo) - A Go transpiler with cool new syntax such as fordefer (defer for
+  for-loops)
 - [mysql-go](https://github.com/rocketlaunchr/mysql-go) - Properly cancel slow MySQL queries
 - [react](https://github.com/rocketlaunchr/react) - Build front end applications using Go
 - [remember-go](https://github.com/rocketlaunchr/remember-go) - Cache slow database queries

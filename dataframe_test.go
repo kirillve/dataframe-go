@@ -49,18 +49,18 @@ func TestInsertAndRemove(t *testing.T) {
 	df.UpdateRow(0, &dontLock, 10000, 1000)
 	df.Update(0, 1, 9000)
 
-	expected := `+-----+-------+---------+
-|     |  DAY  |  SALES  |
-+-----+-------+---------+
-| 0:  | 10000 |  9000   |
-| 1:  |  99   | 199.99  |
-| 2:  |   2   |  23.4   |
-| 3:  |   3   |  56.2   |
-| 4:  |   9   |  123.6  |
-| 5:  |  10   |   NaN   |
-+-----+-------+---------+
-| 6X2 | INT64 | FLOAT64 |
-+-----+-------+---------+`
+	expected := `┌─────┬───────┬─────────┐
+│     │  DAY  │  SALES  │
+├─────┼───────┼─────────┤
+│ 0:  │ 10000 │  9000   │
+│ 1:  │  99   │ 199.99  │
+│ 2:  │   2   │  23.4   │
+│ 3:  │   3   │  56.2   │
+│ 4:  │   9   │  123.6  │
+│ 5:  │  10   │   NaN   │
+├─────┼───────┼─────────┤
+│ 6x2 │ int64 │ float64 │
+└─────┴───────┴─────────┘`
 
 	if strings.TrimSpace(df.Table()) != strings.TrimSpace(expected) {
 		t.Errorf("wrong val: expected: %v actual: %v", expected, df.Table())

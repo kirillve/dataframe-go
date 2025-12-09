@@ -5,9 +5,10 @@ package pandas
 import (
 	"context"
 	"fmt"
-	"golang.org/x/sync/errgroup"
 	"math"
 	"sync"
+
+	"golang.org/x/sync/errgroup"
 
 	dataframe "github.com/rocketlaunchr/dataframe-go"
 )

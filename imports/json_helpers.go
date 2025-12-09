@@ -61,7 +61,6 @@ func detectJSONDataFormat(r io.ReadSeeker) (jsonFormat, error) {
 			return jsonUnknown, fmt.Errorf("invalid input: %v", v)
 		}
 	}
-	panic("should not reach here")
 }
 
 func readJSON(r io.ReadSeeker) (jsonRow, jsonFormat, error) {

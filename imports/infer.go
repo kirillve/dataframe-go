@@ -65,7 +65,7 @@ func newInferSeries(name string, knownSize *int) *inferSeries {
 	return is
 }
 
-// 	We are only appending in here
+// We are only appending in here
 func (is *inferSeries) Insert(row int, val interface{}, opts ...dataframe.Options) {
 
 	// val can be nil or string
@@ -84,7 +84,7 @@ func (is *inferSeries) Insert(row int, val interface{}, opts ...dataframe.Option
 		for i, s := range is.series {
 
 			var ns dataframe.Series
-			iterator := s.ValuesIterator(dataframe.ValuesOptions{0, 1, true})
+			iterator := s.ValuesIterator(dataframe.ValuesOptions{InitialRow: 0, Step: 1, DontReadLock: true})
 
 			switch x := s.(type) {
 			case *dataframe.SeriesFloat64:

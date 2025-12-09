@@ -4,7 +4,7 @@ package interpolation
 
 import (
 	"context"
-	"golang.org/x/xerrors"
+	"fmt"
 	"math"
 
 	"github.com/DzananGanic/numericalgo/interpolate"
@@ -277,7 +277,7 @@ func interpolateSeriesFloat64(ctx context.Context, fs *dataframe.SeriesFloat64, 
 						lagrangeXVals := utils.Float64Seq(float64(*left), float64(*right), 1)
 						lagrangeYVals, err := interpolate.WithMulti(alg.(*lagrange.Lagrange), lagrangeXVals)
 						if err != nil {
-							return nil, xerrors.Errorf("Lagrange method: %w", err)
+							return nil, fmt.Errorf("Lagrange method: %w", err)
 						}
 						fillFn = func(row int) (float64, error) {
 							return lagrangeYVals[row+1], nil
@@ -287,7 +287,7 @@ func interpolateSeriesFloat64(ctx context.Context, fs *dataframe.SeriesFloat64, 
 							xr := xVal(*left+row+1, fs, xaxisF, xaxisT, start)
 							lagrangeYVal, err := interpolate.WithSingle(alg.(*lagrange.Lagrange), xr)
 							if err != nil {
-								return 0, xerrors.Errorf("Lagrange method: %w", err)
+								return 0, fmt.Errorf("Lagrange method: %w", err)
 							}
 							return lagrangeYVal, nil
 						}

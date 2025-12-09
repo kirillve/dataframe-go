@@ -7,13 +7,15 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"golang.org/x/exp/rand"
 	"math/cmplx"
 	"reflect"
 	"sort"
 	"sync"
 
+	"golang.org/x/exp/rand"
+
 	"github.com/olekukonko/tablewriter"
+	"github.com/olekukonko/tablewriter/tw"
 )
 
 // SeriesMixed is used for series containing mixed data.
@@ -646,13 +648,18 @@ func (s *SeriesMixed) Table(opts ...TableOptions) string {
 
 	var buf bytes.Buffer
 
-	table := tablewriter.NewWriter(&buf)
-	table.SetHeader(headers)
+	table := tablewriter.NewTable(&buf,
+		tablewriter.WithConfig(tablewriter.Config{
+			Header: tw.CellConfig{Alignment: tw.CellAlignment{Global: tw.AlignCenter}},
+			Row:    tw.CellConfig{Alignment: tw.CellAlignment{Global: tw.AlignCenter}},
+			Footer: tw.CellConfig{Alignment: tw.CellAlignment{Global: tw.AlignCenter}},
+		}),
+	)
+	table.Header(headers)
 	for _, v := range data {
 		table.Append(v)
 	}
-	table.SetFooter(footers)
-	table.SetAlignment(tablewriter.ALIGN_CENTER)
+	table.Footer(footers)
 
 	table.Render()
 

@@ -7,14 +7,16 @@ import (
 	"bytes"
 	"context"
 	"fmt"
-	"golang.org/x/exp/rand"
 	"math"
 	"math/cmplx"
 	"sort"
 	"strings"
 	"sync"
 
+	"golang.org/x/exp/rand"
+
 	"github.com/olekukonko/tablewriter"
+	"github.com/olekukonko/tablewriter/tw"
 	dataframe "github.com/rocketlaunchr/dataframe-go"
 )
 
@@ -624,13 +626,18 @@ func (s *SeriesComplex128) Table(opts ...dataframe.TableOptions) string {
 
 	var buf bytes.Buffer
 
-	table := tablewriter.NewWriter(&buf)
-	table.SetHeader(headers)
+	table := tablewriter.NewTable(&buf,
+		tablewriter.WithConfig(tablewriter.Config{
+			Header: tw.CellConfig{Alignment: tw.CellAlignment{Global: tw.AlignCenter}},
+			Row:    tw.CellConfig{Alignment: tw.CellAlignment{Global: tw.AlignCenter}},
+			Footer: tw.CellConfig{Alignment: tw.CellAlignment{Global: tw.AlignCenter}},
+		}),
+	)
+	table.Header(headers)
 	for _, v := range data {
 		table.Append(v)
 	}
-	table.SetFooter(footers)
-	table.SetAlignment(tablewriter.ALIGN_CENTER)
+	table.Footer(footers)
 
 	table.Render()
 
