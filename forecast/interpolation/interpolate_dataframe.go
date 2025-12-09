@@ -4,8 +4,9 @@ package interpolation
 
 import (
 	"context"
-	"golang.org/x/sync/errgroup"
 	"sync"
+
+	"golang.org/x/sync/errgroup"
 
 	dataframe "github.com/rocketlaunchr/dataframe-go"
 )

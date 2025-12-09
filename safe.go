@@ -1,5 +1,6 @@
 // Copyright 2018-20 PJ Engineering and Business Solutions Pty. Ltd. All rights reserved.
 
+//go:build js || appengine || safe
 // +build js appengine safe
 
 package dataframe

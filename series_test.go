@@ -78,7 +78,7 @@ func TestSeriesNRows(t *testing.T) {
 		NewSeriesString("test", &SeriesInit{1, 0}, "1", nil, "2", "3"),
 		NewSeriesTime("test", &SeriesInit{1, 0}, time.Now(), nil, time.Now(), time.Now()),
 		NewSeriesMixed("test", &SeriesInit{1, 0}, 1, nil, 2, 3),
-		NewSeriesGeneric("test", civil.Date{}, &SeriesInit{0, 1}, civil.Date{2018, time.May, 01}, nil, civil.Date{2018, time.May, 02}, civil.Date{2018, time.May, 03}),
+		NewSeriesGeneric("test", civil.Date{}, &SeriesInit{0, 1}, civil.Date{Year: 2018, Month: time.May, Day: 1}, nil, civil.Date{Year: 2018, Month: time.May, Day: 2}, civil.Date{Year: 2018, Month: time.May, Day: 3}),
 	}
 
 	expected := []int{
@@ -121,7 +121,7 @@ func TestSeriesOperations(t *testing.T) {
 		"1", "2", "3", "4",
 		tRef, tRef.Add(24 * time.Hour), tRef.Add(2 * 24 * time.Hour), tRef.Add(3 * 24 * time.Hour),
 		1, 2, 3, 4,
-		civil.Date{2018, time.May, 1}, civil.Date{2018, time.May, 2}, civil.Date{2018, time.May, 3}, civil.Date{2018, time.May, 4},
+		civil.Date{Year: 2018, Month: time.May, Day: 1}, civil.Date{Year: 2018, Month: time.May, Day: 2}, civil.Date{Year: 2018, Month: time.May, Day: 3}, civil.Date{Year: 2018, Month: time.May, Day: 4},
 	}
 
 	for i := range init {
@@ -145,7 +145,7 @@ func TestSeriesOperations(t *testing.T) {
 		{"3", "2", "4"},
 		{tRef.Add(2 * 24 * time.Hour), tRef.Add(24 * time.Hour), tRef.Add(3 * 24 * time.Hour)},
 		{3, 2, 4},
-		{civil.Date{2018, time.May, 3}, civil.Date{2018, time.May, 2}, civil.Date{2018, time.May, 4}},
+		{civil.Date{Year: 2018, Month: time.May, Day: 3}, civil.Date{Year: 2018, Month: time.May, Day: 2}, civil.Date{Year: 2018, Month: time.May, Day: 4}},
 	}
 
 	for i := range init {
@@ -174,7 +174,7 @@ func TestSeriesUpdate(t *testing.T) {
 		NewSeriesString("test", &SeriesInit{1, 0}, "1", "2", "3"),
 		NewSeriesTime("test", &SeriesInit{1, 0}, tRef, tRef.Add(24*time.Hour), tRef.Add(2*24*time.Hour)),
 		NewSeriesMixed("test", &SeriesInit{1, 0}, 1, 2, 3),
-		NewSeriesGeneric("test", civil.Date{}, &SeriesInit{0, 1}, civil.Date{2018, time.May, 1}, civil.Date{2018, time.May, 2}, civil.Date{2018, time.May, 3}),
+		NewSeriesGeneric("test", civil.Date{}, &SeriesInit{0, 1}, civil.Date{Year: 2018, Month: time.May, Day: 1}, civil.Date{Year: 2018, Month: time.May, Day: 2}, civil.Date{Year: 2018, Month: time.May, Day: 3}),
 	}
 
 	// Update values
@@ -193,7 +193,7 @@ func TestSeriesUpdate(t *testing.T) {
 		case "mixed":
 			s.Update(0, 99)
 		case "generic(civil.Date)":
-			s.Update(0, civil.Date{2018, time.May, 99})
+			s.Update(0, civil.Date{Year: 2018, Month: time.May, Day: 99})
 		}
 	}
 
@@ -203,7 +203,7 @@ func TestSeriesUpdate(t *testing.T) {
 		{"99", "2", "3"},
 		{tRef.Add(99 * 24 * time.Hour), tRef.Add(24 * time.Hour), tRef.Add(2 * 24 * time.Hour)},
 		{99, 2, 3},
-		{civil.Date{2018, time.May, 99}, civil.Date{2018, time.May, 2}, civil.Date{2018, time.May, 3}},
+		{civil.Date{Year: 2018, Month: time.May, Day: 99}, civil.Date{Year: 2018, Month: time.May, Day: 2}, civil.Date{Year: 2018, Month: time.May, Day: 3}},
 	}
 
 	for i := range init {
@@ -233,7 +233,7 @@ func TestSeriesSwap(t *testing.T) {
 		NewSeriesString("test", &SeriesInit{1, 0}, "1", "2", "3"),
 		NewSeriesTime("test", &SeriesInit{1, 0}, tRef, tRef.Add(24*time.Hour), tRef.Add(2*24*time.Hour)),
 		NewSeriesMixed("test", &SeriesInit{1, 0}, 1, 2, 3),
-		NewSeriesGeneric("test", civil.Date{}, &SeriesInit{0, 1}, civil.Date{2018, time.May, 01}, civil.Date{2018, time.May, 02}, civil.Date{2018, time.May, 03}),
+		NewSeriesGeneric("test", civil.Date{}, &SeriesInit{0, 1}, civil.Date{Year: 2018, Month: time.May, Day: 1}, civil.Date{Year: 2018, Month: time.May, Day: 2}, civil.Date{Year: 2018, Month: time.May, Day: 3}),
 	}
 
 	expectedValues := [][]interface{}{
@@ -242,7 +242,7 @@ func TestSeriesSwap(t *testing.T) {
 		{"3", "2", "1"},
 		{tRef.Add(2 * 24 * time.Hour), tRef.Add(24 * time.Hour), tRef},
 		{3, 2, 1},
-		{civil.Date{2018, time.May, 3}, civil.Date{2018, time.May, 2}, civil.Date{2018, time.May, 1}},
+		{civil.Date{Year: 2018, Month: time.May, Day: 3}, civil.Date{Year: 2018, Month: time.May, Day: 2}, civil.Date{Year: 2018, Month: time.May, Day: 1}},
 	}
 
 	for i := range init {
@@ -275,7 +275,7 @@ func TestSeriesSort(t *testing.T) {
 		NewSeriesInt64("test", &SeriesInit{1, 0}, nil, 1, 2, 3, nil),
 		NewSeriesString("test", &SeriesInit{1, 0}, nil, "1", "2", "3", nil),
 		NewSeriesTime("test", &SeriesInit{1, 0}, nil, tRef, tRef.Add(24*time.Hour), tRef.Add(2*24*time.Hour), nil),
-		NewSeriesGeneric("test", civil.Date{}, &SeriesInit{0, 1}, nil, civil.Date{2018, time.May, 01}, civil.Date{2018, time.May, 02}, civil.Date{2018, time.May, 03}, nil),
+		NewSeriesGeneric("test", civil.Date{}, &SeriesInit{0, 1}, nil, civil.Date{Year: 2018, Month: time.May, Day: 1}, civil.Date{Year: 2018, Month: time.May, Day: 2}, civil.Date{Year: 2018, Month: time.May, Day: 3}, nil),
 		//		NewSeriesMixed("test", &SeriesInit{1, 0}, nil, 1, 2, 3, nil),
 	}
 
@@ -304,7 +304,7 @@ func TestSeriesSort(t *testing.T) {
 		{3, 2, 1, "NaN", "NaN"},
 		{"3", "2", "1", "NaN", "NaN"},
 		{tRef.Add(2 * 24 * time.Hour), tRef.Add(24 * time.Hour), tRef, "NaN", "NaN"},
-		{civil.Date{2018, time.May, 3}, civil.Date{2018, time.May, 2}, civil.Date{2018, time.May, 1}, "NaN", "NaN"},
+		{civil.Date{Year: 2018, Month: time.May, Day: 3}, civil.Date{Year: 2018, Month: time.May, Day: 2}, civil.Date{Year: 2018, Month: time.May, Day: 1}, "NaN", "NaN"},
 		// {3, 2, 1, "NaN", "NaN"},
 	}
 
@@ -339,56 +339,55 @@ func TestSeriesTable(t *testing.T) {
 		NewSeriesInt64("test", &SeriesInit{1, 0}, 1, 2, 3),
 		NewSeriesString("test", &SeriesInit{1, 0}, "1", "2", "3"),
 		NewSeriesTime("test", &SeriesInit{1, 0}, tRef, tRef.Add(24*time.Hour), tRef.Add(2*24*time.Hour)),
-		NewSeriesGeneric("test", civil.Date{}, &SeriesInit{0, 1}, civil.Date{2018, time.May, 01}, civil.Date{2018, time.May, 02}, civil.Date{2018, time.May, 03}),
+		NewSeriesGeneric("test", civil.Date{}, &SeriesInit{0, 1}, civil.Date{Year: 2018, Month: time.May, Day: 1}, civil.Date{Year: 2018, Month: time.May, Day: 2}, civil.Date{Year: 2018, Month: time.May, Day: 3}),
 	}
 
 	expected := []string{
-		`+-----+---------+
-|     |  TEST   |
-+-----+---------+
-| 0:  |    1    |
-| 1:  |    2    |
-| 2:  |    3    |
-+-----+---------+
-| 3X1 | FLOAT64 |
-+-----+---------+`,
-		`+-----+-------+
-|     | TEST  |
-+-----+-------+
-| 0:  |   1   |
-| 1:  |   2   |
-| 2:  |   3   |
-+-----+-------+
-| 3X1 | INT64 |
-+-----+-------+`,
-		`+-----+--------+
-|     |  TEST  |
-+-----+--------+
-| 0:  |   1    |
-| 1:  |   2    |
-| 2:  |   3    |
-+-----+--------+
-| 3X1 | STRING |
-+-----+--------+`,
-		`+-----+-------------------------------+
-|     |             TEST              |
-+-----+-------------------------------+
-| 0:  | 2017-01-01 05:30:12 +0000 UTC |
-| 1:  | 2017-01-02 05:30:12 +0000 UTC |
-| 2:  | 2017-01-03 05:30:12 +0000 UTC |
-+-----+-------------------------------+
-| 3X1 |             TIME              |
-+-----+-------------------------------+`,
-		`+-----+---------------------+
-|     |        TEST         |
-+-----+---------------------+
-| 0:  |     2018-05-01      |
-| 1:  |     2018-05-02      |
-| 2:  |     2018-05-03      |
-+-----+---------------------+
-| 3X1 | GENERIC(CIVIL DATE) |
-+-----+---------------------+
-`,
+		`┌─────┬─────────┐
+│     │  TEST   │
+├─────┼─────────┤
+│ 0:  │    1    │
+│ 1:  │    2    │
+│ 2:  │    3    │
+├─────┼─────────┤
+│ 3x1 │ float64 │
+└─────┴─────────┘`,
+		`┌─────┬───────┐
+│     │ TEST  │
+├─────┼───────┤
+│ 0:  │   1   │
+│ 1:  │   2   │
+│ 2:  │   3   │
+├─────┼───────┤
+│ 3x1 │ int64 │
+└─────┴───────┘`,
+		`┌─────┬────────┐
+│     │  TEST  │
+├─────┼────────┤
+│ 0:  │   1    │
+│ 1:  │   2    │
+│ 2:  │   3    │
+├─────┼────────┤
+│ 3x1 │ string │
+└─────┴────────┘`,
+		`┌─────┬───────────────────────────────┐
+│     │             TEST              │
+├─────┼───────────────────────────────┤
+│ 0:  │ 2017-01-01 05:30:12 +0000 UTC │
+│ 1:  │ 2017-01-02 05:30:12 +0000 UTC │
+│ 2:  │ 2017-01-03 05:30:12 +0000 UTC │
+├─────┼───────────────────────────────┤
+│ 3x1 │             time              │
+└─────┴───────────────────────────────┘`,
+		`┌─────┬─────────────────────┐
+│     │        TEST         │
+├─────┼─────────────────────┤
+│ 0:  │     2018-05-01      │
+│ 1:  │     2018-05-02      │
+│ 2:  │     2018-05-03      │
+├─────┼─────────────────────┤
+│ 3x1 │ generic(civil.Date) │
+└─────┴─────────────────────┘`,
 	}
 
 	for i := range init {
@@ -414,13 +413,13 @@ func TestSeriesString(t *testing.T) {
 		NewSeriesInt64("test", &SeriesInit{1, 0}, 1, 2, 3),
 		NewSeriesString("test", &SeriesInit{1, 0}, "1", "2", "3"),
 		NewSeriesTime("test", &SeriesInit{1, 0}, tRef, tRef.Add(24*time.Hour), tRef.Add(2*24*time.Hour)),
-		NewSeriesGeneric("test", civil.Date{}, &SeriesInit{0, 1}, civil.Date{2018, time.May, 01}, civil.Date{2018, time.May, 02}, civil.Date{2018, time.May, 03}),
+		NewSeriesGeneric("test", civil.Date{}, &SeriesInit{0, 1}, civil.Date{Year: 2018, Month: time.May, Day: 1}, civil.Date{Year: 2018, Month: time.May, Day: 2}, civil.Date{Year: 2018, Month: time.May, Day: 3}),
 
 		NewSeriesFloat64("test", &SeriesInit{1, 0}, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0),
 		NewSeriesInt64("test", &SeriesInit{1, 0}, 1, 2, 3, 4, 5, 6, 7),
 		NewSeriesString("test", &SeriesInit{1, 0}, "1", "2", "3", "4", "5", "6", "7"),
 		NewSeriesTime("test", &SeriesInit{1, 0}, tRef, tRef.Add(24*time.Hour), tRef.Add(2*24*time.Hour), tRef.Add(3*24*time.Hour), tRef.Add(4*24*time.Hour), tRef.Add(5*24*time.Hour), tRef.Add(6*24*time.Hour)),
-		NewSeriesGeneric("test", civil.Date{}, &SeriesInit{0, 1}, civil.Date{2018, time.May, 01}, civil.Date{2018, time.May, 02}, civil.Date{2018, time.May, 03}, civil.Date{2018, time.May, 04}, civil.Date{2018, time.May, 05}, civil.Date{2018, time.May, 06}, civil.Date{2018, time.May, 07}),
+		NewSeriesGeneric("test", civil.Date{}, &SeriesInit{0, 1}, civil.Date{Year: 2018, Month: time.May, Day: 1}, civil.Date{Year: 2018, Month: time.May, Day: 2}, civil.Date{Year: 2018, Month: time.May, Day: 3}, civil.Date{Year: 2018, Month: time.May, Day: 4}, civil.Date{Year: 2018, Month: time.May, Day: 5}, civil.Date{Year: 2018, Month: time.May, Day: 6}, civil.Date{Year: 2018, Month: time.May, Day: 7}),
 	}
 
 	expected := []string{`test: [ 1 2 3 ]`,
@@ -456,7 +455,7 @@ func TestSeriesCopy(t *testing.T) {
 		NewSeriesString("test", &SeriesInit{1, 0}, "1", nil, "2", "3"),
 		NewSeriesTime("test", &SeriesInit{1, 0}, time.Now(), nil, time.Now(), time.Now()),
 		NewSeriesMixed("test", &SeriesInit{1, 0}, 1, nil, 2, 3),
-		NewSeriesGeneric("test", civil.Date{}, &SeriesInit{0, 1}, civil.Date{2018, time.May, 01}, nil, civil.Date{2018, time.May, 02}, civil.Date{2018, time.May, 03}),
+		NewSeriesGeneric("test", civil.Date{}, &SeriesInit{0, 1}, civil.Date{Year: 2018, Month: time.May, Day: 1}, nil, civil.Date{Year: 2018, Month: time.May, Day: 2}, civil.Date{Year: 2018, Month: time.May, Day: 3}),
 	}
 
 	for i := range init {
@@ -499,7 +498,7 @@ func TestSeriesIsEqual(t *testing.T) {
 		NewSeriesString("test", &SeriesInit{1, 0}, "1", "2", "3"),
 		NewSeriesTime("test", &SeriesInit{1, 0}, tRef, tRef.Add(24*time.Hour), tRef.Add(2*24*time.Hour)),
 		// NewSeriesMixed("test", &SeriesInit{1, 0}, 1, "two", 3.0),
-		NewSeriesGeneric("test", civil.Date{}, &SeriesInit{0, 1}, civil.Date{2018, time.May, 01}, civil.Date{2018, time.May, 02}, civil.Date{2018, time.May, 03}),
+		NewSeriesGeneric("test", civil.Date{}, &SeriesInit{0, 1}, civil.Date{Year: 2018, Month: time.May, Day: 1}, civil.Date{Year: 2018, Month: time.May, Day: 2}, civil.Date{Year: 2018, Month: time.May, Day: 3}),
 	}
 
 	(init[4].(*SeriesGeneric)).SetIsEqualFunc(func(a, b interface{}) bool {
@@ -514,7 +513,7 @@ func TestSeriesIsEqual(t *testing.T) {
 		NewSeriesString("expected", &SeriesInit{1, 0}, "1", "2", "3"),
 		NewSeriesTime("expected", &SeriesInit{1, 0}, tRef, tRef.Add(24*time.Hour), tRef.Add(2*24*time.Hour)),
 		// NewSeriesMixed("expected", &SeriesInit{1, 0}, 1, "two", 3.0),
-		NewSeriesGeneric("expected", civil.Date{}, &SeriesInit{0, 1}, civil.Date{2018, time.May, 01}, civil.Date{2018, time.May, 02}, civil.Date{2018, time.May, 03}),
+		NewSeriesGeneric("expected", civil.Date{}, &SeriesInit{0, 1}, civil.Date{Year: 2018, Month: time.May, Day: 1}, civil.Date{Year: 2018, Month: time.May, Day: 2}, civil.Date{Year: 2018, Month: time.May, Day: 3}),
 	}
 
 	for i := range init {
@@ -544,7 +543,7 @@ func TestStopAtOneNil(t *testing.T) {
 		NewSeriesString("test", &SeriesInit{1, 0}, nil, "1", "2", nil, "3"),
 		NewSeriesTime("test", &SeriesInit{1, 0}, tRef, nil, nil, tRef.Add(24*time.Hour), nil, tRef.Add(2*24*time.Hour)),
 		NewSeriesMixed("test", &SeriesInit{1, 0}, 1, "two", nil, nil, 3.0, nil, nil),
-		NewSeriesGeneric("test", civil.Date{}, &SeriesInit{0, 1}, civil.Date{2018, time.May, 01}, nil, nil, civil.Date{2018, time.May, 02}, nil, nil, civil.Date{2018, time.May, 03}),
+		NewSeriesGeneric("test", civil.Date{}, &SeriesInit{0, 1}, civil.Date{Year: 2018, Month: time.May, Day: 1}, nil, nil, civil.Date{Year: 2018, Month: time.May, Day: 2}, nil, nil, civil.Date{Year: 2018, Month: time.May, Day: 3}),
 	}
 
 	opts := NilCountOptions{StopAtOneNil: true}

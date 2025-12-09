@@ -14,17 +14,16 @@ type GenericDataConverter func(in interface{}) (interface{}, error)
 //
 // Example:
 //
-//  opts := imports.CSVLoadOptions{
-//     DictateDataType: map[string]interface{}{
-//        "Date": imports.Converter{
-//           ConcreteType: time.Time{},
-//           ConverterFunc: func(in interface{}) (interface{}, error) {
-//              return time.Parse("2006-01-02", in.(string))
-//           },
-//        },
-//     },
-//  }
-//
+//	opts := imports.CSVLoadOptions{
+//	   DictateDataType: map[string]interface{}{
+//	      "Date": imports.Converter{
+//	         ConcreteType: time.Time{},
+//	         ConverterFunc: func(in interface{}) (interface{}, error) {
+//	            return time.Parse("2006-01-02", in.(string))
+//	         },
+//	      },
+//	   },
+//	}
 type Converter struct {
 	ConcreteType  interface{}
 	ConverterFunc GenericDataConverter

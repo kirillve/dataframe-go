@@ -87,26 +87,25 @@ type Plot struct {
 //
 // Example:
 //
-//  import chart "github.com/wcharczuk/go-chart"
+//	import chart "github.com/wcharczuk/go-chart"
 //
-//  graph := chart.Chart{
-//     Series: []chart.Series{
-//        chart.TimeSeries{
-//           XValues: []time.Time{
-//              time.Now().AddDate(0, 0, -2),
-//              time.Now().AddDate(0, 0, -1),
-//              time.Now(),
-//           }
-//           YValues: []float64{9.0, 10.0, 11.0},
-//        },
-//     },
-//  }
+//	graph := chart.Chart{
+//	   Series: []chart.Series{
+//	      chart.TimeSeries{
+//	         XValues: []time.Time{
+//	            time.Now().AddDate(0, 0, -2),
+//	            time.Now().AddDate(0, 0, -1),
+//	            time.Now(),
+//	         }
+//	         YValues: []float64{9.0, 10.0, 11.0},
+//	      },
+//	   },
+//	}
 //
-//  plt, _ := plot.Open("Linear", 150, 250)
-//  graph.Render(chart.SVG, plt)
-//  plt.Display(plot.None)
-//  <-plt.Closed
-//
+//	plt, _ := plot.Open("Linear", 150, 250)
+//	graph.Render(chart.SVG, plt)
+//	plt.Display(plot.None)
+//	<-plt.Closed
 func Open(title string, width, height int) (*Plot, error) {
 
 	if lorca.LocateChrome() == "" {
@@ -136,7 +135,7 @@ func Open(title string, width, height int) (*Plot, error) {
 
 	go func() {
 		plot.Closed <- <-ui.Done() // triggered when window is destroyed
-		ui.Close()
+		_ = ui.Close()
 	}()
 
 	return plot, nil

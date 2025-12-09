@@ -54,8 +54,6 @@ func Apply(ctx context.Context, sdf interface{}, fn interface{}, opts ...FilterO
 	default:
 		panic("sdf must be a Series or DataFrame")
 	}
-
-	return nil, nil
 }
 
 func applySeries(ctx context.Context, s Series, fn ApplySeriesFn, opts ...FilterOptions) (Series, error) {

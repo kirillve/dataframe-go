@@ -50,6 +50,4 @@ func Forecast(ctx context.Context, sdf interface{}, r *dataframe.Range, alg Fore
 	default:
 		panic("sdf must be a Series or DataFrame")
 	}
-
-	panic("no reach")
 }

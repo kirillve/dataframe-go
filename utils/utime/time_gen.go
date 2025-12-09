@@ -23,12 +23,12 @@ type TimeGenerator func(startTime time.Time, reverse bool) NextTime
 //
 // Example:
 //
-//  gen, _ := utime.TimeIntervalGenerator("1W1D")
-//  ntg := gen(time.Now().UTC(), false)
-//  for {
-//     fmt.Println(ntg())
-//     time.Sleep(500 * time.Millisecond)
-//  }
+//	gen, _ := utime.TimeIntervalGenerator("1W1D")
+//	ntg := gen(time.Now().UTC(), false)
+//	for {
+//	   fmt.Println(ntg())
+//	   time.Sleep(500 * time.Millisecond)
+//	}
 //
 // See: https://golang.org/pkg/time/#ParseDuration
 func TimeIntervalGenerator(timeFreq string) (TimeGenerator, error) {

@@ -125,13 +125,12 @@ func RangeFinite(start int, end ...int) Range {
 //
 // Example:
 //
-//  import "sort"
-//  ints := []int{2,4,5,6,8,10,11,45,46}
-//  sort.Ints(ints)
+//	import "sort"
+//	ints := []int{2,4,5,6,8,10,11,45,46}
+//	sort.Ints(ints)
 //
-//  fmt.Println(IntsToRanges(ints))
-//  // Output: R{2,2}, R{4,6}, R{8,8}, R{10,11}, R{45,46}
-//
+//	fmt.Println(IntsToRanges(ints))
+//	// Output: R{2,2}, R{4,6}, R{8,8}, R{10,11}, R{45,46}
 func IntsToRanges(ints []int) []Range {
 
 	out := []Range{}

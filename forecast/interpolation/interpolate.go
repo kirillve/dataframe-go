@@ -102,6 +102,4 @@ func Interpolate(ctx context.Context, sdf interface{}, opts InterpolateOptions) 
 	default:
 		panic("sdf must be a SeriesFloat64 or DataFrame")
 	}
-
-	return nil, nil
 }
