@@ -1,0 +1,67 @@
+version: "2"
+
+linters:
+  default: standard
+  exclusions:
+    presets:
+      - std-error-handling
+    rules:
+      - linters:
+          - ineffassign
+        path: imports/json\.go
+      # Disable deprecated warnings for golang.org/x/exp/rand
+      - linters:
+          - staticcheck
+        text: "SA1019.*golang.org/x/exp/rand"
+      # Disable deprecated strings.Title warning
+      - linters:
+          - staticcheck
+        text: "SA1019.*strings.Title"
+      # Disable deprecated rand.Seed warning
+      - linters:
+          - staticcheck
+        text: "SA1019.*rand.Seed"
+      # Disable error string capitalization
+      - linters:
+          - staticcheck
+        text: "ST1005"
+      # Disable redundant type declarations
+      - linters:
+          - staticcheck
+        text: "ST1023"
+      # Disable tagged switch suggestions
+      - linters:
+          - staticcheck
+        text: "QF1003"
+      # Disable De Morgan's law suggestions
+      - linters:
+          - staticcheck
+        text: "QF1001"
+      # Disable lift into loop condition
+      - linters:
+          - staticcheck
+        text: "QF1006"
+      # Disable bool comparison suggestions
+      - linters:
+          - staticcheck
+        text: "S1002"
+      # Disable simplified return suggestions
+      - linters:
+          - staticcheck
+        text: "S1008"
+      # Disable identical expressions warning
+      - linters:
+          - staticcheck
+        text: "SA4000"
+      # Disable empty branch warning
+      - linters:
+          - staticcheck
+        text: "SA9003"
+      # Disable could omit type from declaration
+      - linters:
+          - staticcheck
+        text: "QF1011"
+      # Disable could remove embedded field from selector
+      - linters:
+          - staticcheck
+        text: "QF1008"

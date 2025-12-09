@@ -158,7 +158,7 @@ func interpolateSeriesFloat64(ctx context.Context, fs *dataframe.SeriesFloat64, 
 		}
 
 		li := lagrange.New()
-		li.Fit(xVals, yVals)
+		_ = li.Fit(xVals, yVals)
 
 		alg = li
 	}

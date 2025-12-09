@@ -33,8 +33,8 @@ func printMap(headers []string, mp map[string][]interface{}) string {
 		for _, v := range mp[k] {
 			tr = append(tr, fmt.Sprintf("%v", v))
 		}
-		table.Append(tr)
+		_ = table.Append(tr)
 	}
-	table.Render()
+	_ = table.Render()
 	return buf.String()
 }

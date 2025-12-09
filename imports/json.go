@@ -85,7 +85,7 @@ func LoadFromJSON(ctx context.Context, r io.ReadSeeker, options ...JSONLoadOptio
 				t, err := dec.Token()
 				if err != nil {
 					if err == io.EOF {
-						r.Seek(0, io.SeekStart)
+						_, _ = r.Seek(0, io.SeekStart)
 						break
 					}
 					return nil, err
@@ -273,7 +273,7 @@ func LoadFromJSON(ctx context.Context, r io.ReadSeeker, options ...JSONLoadOptio
 	if jf != jsonlArray {
 		names := df.Names(dataframe.DontLock)
 		sort.Strings(names)
-		df.ReorderColumns(names)
+		_ = df.ReorderColumns(names)
 	}
 
 	return df, nil

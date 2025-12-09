@@ -26,7 +26,7 @@ const (
 )
 
 func detectJSONDataFormat(r io.ReadSeeker) (jsonFormat, error) {
-	defer r.Seek(0, io.SeekStart)
+	defer func() { _, _ = r.Seek(0, io.SeekStart) }()
 
 	dec := json.NewDecoder(r)
 
@@ -79,7 +79,7 @@ func readJSON(r io.ReadSeeker) (jsonRow, jsonFormat, error) {
 func processArray(r io.ReadSeeker) jsonRow {
 	dec := json.NewDecoder(r)
 	dec.UseNumber()
-	dec.Token()
+	_, _ = dec.Token()
 	count := -1
 	return func() (*int, interface{}, error) {
 		if dec.More() {

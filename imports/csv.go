@@ -114,7 +114,7 @@ func LoadFromCSV(ctx context.Context, r io.ReadSeeker, options ...CSVLoadOptions
 				_, err := cr.Read()
 				if err != nil {
 					if err == io.EOF {
-						newR.Seek(0, io.SeekStart)
+						_, _ = newR.Seek(0, io.SeekStart)
 						break
 					}
 					return nil, err

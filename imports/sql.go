@@ -134,7 +134,7 @@ func LoadFromSQL(ctx context.Context, stmt interface{}, options *SQLLoadOptions,
 	if err != nil {
 		return nil, err
 	}
-	defer rows.Close()
+	defer func() { _ = rows.Close() }()
 
 	cols, _ := rows.ColumnTypes()
 	totalColumns := len(cols)

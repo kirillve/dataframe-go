@@ -619,11 +619,11 @@ func (s *SeriesString) Table(opts ...TableOptions) string {
 	)
 	table.Header(headers)
 	for _, v := range data {
-		table.Append(v)
+		_ = table.Append(v)
 	}
 	table.Footer(footers)
 
-	table.Render()
+	_ = table.Render()
 
 	return buf.String()
 }

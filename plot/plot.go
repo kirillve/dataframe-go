@@ -135,7 +135,7 @@ func Open(title string, width, height int) (*Plot, error) {
 
 	go func() {
 		plot.Closed <- <-ui.Done() // triggered when window is destroyed
-		ui.Close()
+		_ = ui.Close()
 	}()
 
 	return plot, nil

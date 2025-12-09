@@ -91,7 +91,7 @@ func ExportToParquet(ctx context.Context, w io.Writer, df *dataframe.DataFrame, 
 	schemaStruct := dataSchema.Build()
 
 	fw := writerfile.NewWriterFile(w)
-	defer fw.Close()
+	defer func() { _ = fw.Close() }()
 
 	pw, err := writer.NewParquetWriter(fw, schemaStruct.New(), int64(runtime.NumCPU()))
 	if err != nil {
